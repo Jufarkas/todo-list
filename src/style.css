@@ -41,7 +41,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     z-index: 1;
     top: 0;
     left: 0;
-    width: 220px;
+    width: 230px;
     background-color: #60a5fa; /* #400 from the blue color palette  */
 }
 
@@ -102,12 +102,95 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: #3b82f6;
     text-shadow: 0px 0px 10px black;
     border: 1px solid #0000001f;
-    /* box-shadow: -1px -1px 8px 0px black; */
-    box-shadow: inset 1px 1px 3px 0px black;
+    box-shadow: -1px -1px 8px 0px black;
+    /* box-shadow: inset 0px 1px 3px 0px black; */
 }
 
 
-/* CONTENT CONTAINER */
-.content-container {
-    margin-left: 230px;
+/* MASTER CONTAINER */
+.master-container {
+    /* left margin offsets sidebar, with a 10px gap; right margin to match gap */
+    margin-left: 240px;
+    margin-right: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* CARD GRID */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* CARD CONTAINER */
+.toDo-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* CARD BUTTONS */
+.card-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.card-buttons img {
+    height: 25px;
+    width: 25px;
+}
+
+.card-buttons button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 110px;
+    border: none;
+    background-color: #bfdbfe;
+}
+
+.card-buttons button:hover{
+    background-color: #dbeafe;
+    /* box-shadow: 1px 1px 3px 0px #60a5fa; */
+    box-shadow: inset 0px -1px 3px 0px #60a5fa;
+    cursor: pointer;
+}
+
+.card-buttons button:active{
+    background-color: #bfdbfe;
+    box-shadow: none;
+}
+
+
+/* INDIVIDUAL TASK/NOTE */
+
+.task {
+    display: grid;
+    grid-template: 30px 20px 20px 1fr / 1fr;
+    height: 250px;
+    border: none;
+    cursor: pointer;
+    background-color:  #bfdbfe;
+}
+
+.task:hover {
+    background-color: #dbeafe;
+    box-shadow: 0px 1px 5px 0px #60a5fa;
+}
+
+.task h3, h6 {
+    margin: 0;
+    align-self: center;
+    justify-self: start;
+}
+
+.task h3 {
+    font-size: 1.6em;
+}
+
+.task h6 {
+    font-size: 1em;
 }
