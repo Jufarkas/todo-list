@@ -65,7 +65,7 @@ console.log(thisDate);
         const taskImage = new Image();
         taskImage.src = item.imgSrc;
         taskImage.classList.add('sidebar-svg');
-        taskImage.setAttribute("alt", (item.text + " icon")); // might have to fix this
+        taskImage.setAttribute("alt", (item.text + " icon"));
         
         newListButton.appendChild(taskImage);
         newListButton.appendChild(buttonText);
