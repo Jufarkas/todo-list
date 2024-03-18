@@ -106,6 +106,30 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     /* box-shadow: inset 0px 1px 3px 0px black; */
 }
 
+.sidebar-list button:active{
+    background-color: #3b82f6;
+    box-shadow: inset 0px 1px 3px 0px black;
+    text-shadow: none;
+}
+
+.newTask {
+    margin-top: 40px;
+}
+
+.newTask span {
+    font-size: 1.7em;
+    height: 40px;
+}
+
+.newTask:hover {
+    color: #00ff58;
+}
+
+.newTask:hover img {
+    filter: invert(77%) sepia(22%) saturate(6275%) hue-rotate(87deg) brightness(104%) contrast(112%);
+}
+
+
 
 /* MASTER CONTAINER */
 .master-container {
@@ -192,4 +216,118 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .task h6 {
     font-size: 1em;
+}
+
+/* NEW TASK DIALOG BOX */
+
+::backdrop {
+    background-color: rgba(255, 255, 255, 0.836);
+}
+
+.taskDialog {
+    height: 540px;
+    width: 500px;
+    min-width: 200px;
+    padding: 20px 20px 0 20px;
+    border-radius: 10px;
+    border: 2px solid #1e3a8a;
+    -webkit-box-shadow: 0px 0px 10px 3px #000000;
+    -moz-box-shadow: 0px 0px 10px 3px #000000;
+    box-shadow: 0px 0px 10px 3px #000000;
+    background-color: #eff6ff;
+}
+
+.newTaskDialog {
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'ComingSoon';
+    background-color: #dbeafe;
+}
+
+.formInput {
+    font-weight: 600;
+    font-size: 1.3em;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.titleInput {
+    margin: 0;
+}
+
+#taskTitle {
+    height: 15%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1em;
+}
+
+#taskImportance {
+    width: 115px;
+    font-size: 1em;
+}
+
+#taskText {
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.9em;
+}
+
+.formButtons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.formCancel, .formConfirm {
+    cursor: pointer;
+    font-size: 1.4em;
+    height: 50px;
+    width: 100px;
+    border-radius: 10px;
+}
+
+.formCancel, .formConfirm {
+    height: 50px;
+    justify-content: center;
+    gap: 20px;
+    outline: 0;
+    align-items: center;
+    background: 0 0;
+    border: 1px solid #000;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    flex-shrink: 0;
+    font-size: 20px;
+    line-height: 1.5;
+    overflow: hidden;
+    padding: 12px 16px;
+    text-decoration: none;
+    transition: all .14s ease-out;
+    white-space: nowrap;
+    width: 120px;
+    align-self: center;
+}
+
+.formCancel:active, .formConfirm:active {
+    transform: translate(3px,3px);
+}
+
+
+.formConfirm:hover {
+    background-color: rgba(30, 255, 0, 0.2);
+    box-shadow: 4px 4px 0 #000;
+    transform: translate(-3px,-3px);
+}
+
+.formCancel:hover {
+    background-color: rgba(255, 0, 0, 0.200);
+    box-shadow: 4px 4px 0 #000;
+    transform: translate(-3px,-3px);
+}
+
+.formConfirm:focus-visible, .formCancel:focus-visible{
+    outline-offset: 1px;
 }
