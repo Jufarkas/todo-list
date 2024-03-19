@@ -218,6 +218,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 1em;
 }
 
+/* for template task note for cloning */
+
+.wrapper {
+    display: none;
+}
+
 /* NEW TASK DIALOG BOX */
 
 ::backdrop {
@@ -246,7 +252,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .formInput {
-    color: #7a17dd;
+    color: #6d28d9;
     font-weight: 600;
     font-size: 1.3em;
     margin-top: 20px;
