@@ -1,16 +1,18 @@
 import './style.css';
-import AllTasksIcon from './allTask.svg'
-import ImportantTasksIcon from './importantTask.svg'
-import FutureTasksIcon from './futureTask.svg'
-import CompletedTasksIcon from './completedTask.svg'
-import NotesIcon from './notes.svg'
+import AllTasksIcon from './allTask.svg';
+import ImportantTasksIcon from './importantTask.svg';
+import FutureTasksIcon from './futureTask.svg';
+import CompletedTasksIcon from './completedTask.svg';
+import NewTaskIcon from './newTask.svg';
+import { createCard } from './createCard';
+import { openDialog } from './dialog';
 
 let date = new Date();
 let thisDate = date.toLocaleDateString();
 console.log(thisDate);
 
 
-// below function creates sidebar and appends to body, only creates "All Tasks" rn
+// below creates sidebar and appends to body; also adds task note template
 (function(){
     const BODY = document.querySelector('body');
     const sidebar = document.createElement('div');
@@ -47,9 +49,9 @@ console.log(thisDate);
             imgSrc: CompletedTasksIcon,
         },
         {
-            title: "notes",
-            text: "Notes",
-            imgSrc: NotesIcon,
+            title: "newTask",
+            text: "New Task",
+            imgSrc: NewTaskIcon,
         },
     ];
 
@@ -71,5 +73,33 @@ console.log(thisDate);
         newListButton.appendChild(buttonText);
         sidebarList.appendChild(newListItem);
     });
+
     sidebar.appendChild(sidebarList);
+
+    // create master for positioning; cardGrid container for the card grid
+    const masterContainer = document.createElement('div');
+    masterContainer.classList.add('master-container');
+    const cardGrid = document.createElement('div');
+    cardGrid.classList.add('card-grid');
+    BODY.appendChild(masterContainer);
+    masterContainer.appendChild(cardGrid);
+
+    // create card and card fields
+    createCard();
 }());
+
+
+const newTask = document.querySelector('.newTask');
+
+newTask.addEventListener('click', () => {
+    const BODY = document.querySelector('body');
+    let dialog = document.querySelector('.taskDialog');
+    let dialogCheck = (BODY.contains(dialog)) ? ('yes') : ('no');
+    if (dialogCheck === 'yes') {
+        dialog.showModal();
+    } else {
+        openDialog();
+        dialog = document.querySelector('.taskDialog');
+        dialog.showModal();
+    };
+});
