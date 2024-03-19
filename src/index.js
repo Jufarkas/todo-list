@@ -1,18 +1,13 @@
 import './style.css';
-import AllTasksIcon from './allTask.svg';
+import CurrentTasksIcon from './currentTask.svg';
 import ImportantTasksIcon from './importantTask.svg';
 import FutureTasksIcon from './futureTask.svg';
 import CompletedTasksIcon from './completedTask.svg';
 import NewTaskIcon from './newTask.svg';
 import { createCard } from './createCard';
-import { openDialog } from './dialog';
+import { createDialog } from './createDialog';
 
-let date = new Date();
-let thisDate = date.toLocaleDateString();
-console.log(thisDate);
-
-
-// below creates sidebar and appends to body; also adds task note template
+// below creates sidebar and appends to body; also adds hidden task note template
 (function(){
     const BODY = document.querySelector('body');
     const sidebar = document.createElement('div');
@@ -29,9 +24,9 @@ console.log(thisDate);
 
     const sidebarListItems = [
         {
-            title: "allTasks",
-            text: "All Tasks",
-            imgSrc: AllTasksIcon,
+            title: "currentTasks",
+            text: "Current Tasks",
+            imgSrc: CurrentTasksIcon,
         },
         {
             title: "importantTasks",
@@ -55,6 +50,7 @@ console.log(thisDate);
         },
     ];
 
+    //creates a button w/ icon for each object in the sidebarListItems array
     sidebarListItems.forEach((item) => {
         const newListItem = document.createElement('li');
         const newListButton = document.createElement('button');
@@ -76,7 +72,7 @@ console.log(thisDate);
 
     sidebar.appendChild(sidebarList);
 
-    // create master for positioning; cardGrid container for the card grid
+    // creates master container for positioning with sidebar; cardGrid container for the card grid
     const masterContainer = document.createElement('div');
     masterContainer.classList.add('master-container');
     const cardGrid = document.createElement('div');
@@ -98,7 +94,7 @@ newTask.addEventListener('click', () => {
     if (dialogCheck === 'yes') {
         dialog.showModal();
     } else {
-        openDialog();
+        createDialog();
         dialog = document.querySelector('.taskDialog');
         dialog.showModal();
     };
