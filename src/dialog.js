@@ -1,3 +1,5 @@
+import { NewNote } from "./newNote";
+
 export function openDialog() {
     // add dialog to body
     const BODY = document.querySelector('body');
@@ -87,7 +89,6 @@ export function openDialog() {
     formFieldset.appendChild(taskTextLabel);
     formFieldset.appendChild(taskTextArea);
 
-
     // create Cancel/Confirm btns; append to FORM (after all labels/inputs)
     const formButtons = document.createElement('div');
     formButtons.classList.add('formButtons');
@@ -98,22 +99,26 @@ export function openDialog() {
     cancelButton.setAttribute("value", "cancel");
     cancelButton.formMethod = "dialog";
     cancelButton.classList.add('formCancel');
-    
-
-    // ****************************************************************** 
-    // ******************************************************************
-    // need to run a function when the confirmButton is pressed to 'submit'
-    // the data entered into the array of objects that will hold all the notes
 
     const confirmButton = document.createElement('button');
     confirmButton.textContent = "Confirm";
     confirmButton.setAttribute("value", "confirm");
     confirmButton.classList.add('formConfirm');
 
-    // ****************************************************************** 
-    // ****************************************************************** 
-
     formButtons.appendChild(cancelButton);
     formButtons.appendChild(confirmButton);
+
+    // add listener to confirm/cancel btns; call on fnc in newNote.js when clicked
     
+    const formConfirm = document.querySelector('.formConfirm');
+    formConfirm.addEventListener('click', (e) => {
+        e.preventDefault();
+        let title = document.getElementById('taskTitle').value; 
+        let importance = document.getElementById('taskImportance').value; 
+        let dueDate = document.getElementById('taskDueDate').value; 
+        let description = document.getElementById('taskText').value;
+
+        // run function to create new note with class constructor from newNote
+        NewNote.createNewNote(title, importance, dueDate, description);
+    });
 };
