@@ -25,6 +25,7 @@ export class NewNote {
         //cardGrid needed to append new cards to
         const cardGrid = document.querySelector('.card-grid');
 
+        let task = document.querySelector('.task');
         let newTitle = document.querySelector('.task-title');
         let newImportance = document.querySelector('.task-priority');
         let newDueDate = document.querySelector('.task-date');
@@ -33,6 +34,14 @@ export class NewNote {
         newImportance.textContent = "Importance: " + importance;
         newDueDate.textContent = 'Due: ' + dueDate;
         newDescription.textContent = description;
+
+        //have to remove the class as it continuously adds it regardless if a note is marked "normal"; then check importance again and add to 'important' only note(s)
+        task.classList.remove('importantNote');
+        
+        //checks if "important" is selected and applies relevant class
+        if (importance === "Important"){
+            task.classList.add('importantNote');
+        }
 
         this.myNotes[title] = new NewNote(title, importance, dueDate, description);
 
