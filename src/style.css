@@ -57,9 +57,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 100%;
     height: auto;
     text-align: center;
-    padding-top: 30px;
+    padding-top: 12px;
     margin: 0;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     text-decoration: underline;
 }
 
@@ -152,7 +152,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* CARD GRID */
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 320px));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
     gap: 20px;
 }
 
@@ -182,7 +182,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
     justify-content: center;
     gap: 5px;
-    width: 100px;
+    width: 110px;
     border: none;
     background-color: #bfdbfe;
 }
@@ -204,11 +204,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .task {
     display: grid;
-    grid-template: 40px 25px 25px 1fr / 1fr;
+    grid-template: auto 25px 25px 1fr / 1fr;
     height: 280px;
     border: none;
     background-color: #bfdbfe;
     font-family: Arial, Helvetica, sans-serif;
+    overflow-wrap: anywhere;
 }
 
 .task h3, h6 {
@@ -232,7 +233,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin: 0;
 }
 
-/* for template task note for cloning */
+/* Styling for completed note */
+.completedNote {
+    background-color: #d9f99d !important;
+    /* or #a7f3d0, or #bbf7d0 */
+}
+
+.importantNote {
+    background-color: #fecaca;
+}
+
+/* hidden template task note, for cloning */
 
 .wrapper {
     display: none;
