@@ -4,6 +4,7 @@
 import MarkCompleteIcon from './markComplete.svg';
 import DeleteIcon from './deleteTask.svg';
 import EditIcon from './editTask.svg';
+// import { NewNote } from './newNote';
 
 export function createCard() {
     // create cardGrid to hold cards
@@ -16,7 +17,7 @@ export function createCard() {
     const taskCard = document.createElement('div');
     taskCard.classList.add('task-card');
 
-    const task = document.createElement('button');
+    const task = document.createElement('div');
     task.classList.add('task');
 
     const taskTitleH3 = document.createElement('h3');
@@ -45,26 +46,35 @@ export function createCard() {
 
     const completeBtn = document.createElement('button');
     completeBtn.textContent = "Complete";
+    completeBtn.classList.add('complete-task');
     const completeBtnIcon = new Image();
     completeBtnIcon.src = MarkCompleteIcon;
     completeBtnIcon.setAttribute("alt", "mark complete button icon");
     completeBtn.appendChild(completeBtnIcon);
     
+    
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = "Delete";
+    deleteBtn.classList.add('delete-task');
     const deleteBtnIcon = new Image();
     deleteBtnIcon.src = DeleteIcon;
     deleteBtnIcon.setAttribute("alt", "delete button icon");
     deleteBtn.appendChild(deleteBtnIcon);
     
+    
     const editBtn = document.createElement('button');
     editBtn.textContent = "Edit";
+    editBtn.classList.add('edit-task');
     const editBtnIcon = new Image();
     editBtnIcon.src = EditIcon;
     editBtnIcon.setAttribute("alt", "edit button icon");
     editBtn.appendChild(editBtnIcon);
+    
 
     cardButtons.appendChild(completeBtn);
+    // cardButtons.appendChild(completeBtnIcon);
     cardButtons.appendChild(deleteBtn);
+    // cardButtons.appendChild(deleteBtnIcon);
     cardButtons.appendChild(editBtn);
-}
+    // cardButtons.appendChild(editBtnIcon);
+};

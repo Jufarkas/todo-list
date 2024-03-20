@@ -1,4 +1,4 @@
-import { NewNote } from "./newNote";
+import { submitNewTask } from "./btnClickFn";
 
 export function createDialog() {
     // add dialog to body
@@ -111,13 +111,6 @@ export function createDialog() {
     // add listener to confirm btn; call on fnc in newNote.js when clicked
     const formConfirm = document.querySelector('.formConfirm');
     formConfirm.addEventListener('click', (e) => {
-        e.preventDefault();
-        let title = document.getElementById('taskTitle').value; 
-        let importance = document.getElementById('taskImportance').value; 
-        let dueDate = document.getElementById('taskDueDate').value; 
-        let description = document.getElementById('taskText').value;
-
-        // run function to create new note with class constructor from newNote
-        NewNote.createNewNote(title, importance, dueDate, description);
+        submitNewTask(e);
     });
 };

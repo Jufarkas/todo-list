@@ -1,5 +1,3 @@
-
-
 export class NewNote {
 
     static title;
@@ -16,6 +14,10 @@ export class NewNote {
     }
 
     static createNewNote(title, importance, dueDate, description){
+        if(this.myNotes.hasOwnProperty(title)){
+            alert("Sorry no duplicates allowed");
+            return;
+        }
         //grab dialog; to close once finished creating new note
         const dialog = document.querySelector('dialog');
         //wrapper contains "hidden" card template that we clone in the .forEach below
