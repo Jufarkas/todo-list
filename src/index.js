@@ -5,7 +5,7 @@ import FutureTasksIcon from './futureTask.svg';
 import CompletedTasksIcon from './completedTask.svg';
 import NewTaskIcon from './newTask.svg';
 import { createCard } from './createCard';
-import { startNewTask } from './btnClickFn';
+import { startNewTask, taskBtnClick } from './btnClickFn';
 import { NewNote } from './newNote';
 
 // below creates sidebar and appends to body; also adds hidden task note template
@@ -93,41 +93,10 @@ newTask.addEventListener('click', () => {
     startNewTask();
 });
 
-
-const noteList = NewNote.myNotes;
-    function removeNote(noteClicked){
-        if(noteList[noteClicked]){
-            delete noteList[noteClicked]
-            console.log(noteList);
-        };
-    };
-
-    // 
-    //export this whole function to a different module afterwards
+//export this whole function to a different module afterwards
 function addTaskCardListener() {
     const taskCard = document.querySelector('.card-grid');
     taskCard.addEventListener('click', function(e) {
-        const target = e.target;
-        const card = target.closest('.task-card');
-        const title = card.querySelector('.task-title').textContent;
-        const priority = card.querySelector('.task-priority').textContent.replace('Importance: ', '');
-        const date = card.querySelector('.task-date').textContent.replace('Due: ', '');
-        const text = card.querySelector('.task-para').textContent;
-
-        if (target.classList.contains('delete-task')) {
-            let noteClicked = card.querySelector('.task-title').textContent;
-            card.remove();
-            removeNote(noteClicked);
-        } else if (target.classList.contains('edit-task')) {
-            const dialog = document.querySelector('dialog');
-            document.getElementById('taskTitle').value = title;
-            document.getElementById('taskImportance').value = priority;
-            document.getElementById('taskDueDate').value = date;
-            document.getElementById('taskText').value = text;
-            dialog.showModal();
-        } else if (target.classList.contains('complete-task')){
-        alert("yaaaaYEET")
-
-        }
+        taskBtnClick(e);
     });
 }
