@@ -6,7 +6,7 @@ import CompletedTasksIcon from './completedTask.svg';
 import NewTaskIcon from './newTask.svg';
 import { createCard } from './createCard';
 import { startNewTask, taskBtnClick } from './btnClickFn';
-import { NewNote } from './newNote';
+import { createNewTaskDialog, createEditTaskDialog } from './createDialogs';
 
 // below creates sidebar and appends to body; also adds hidden task note template
 (function(){
@@ -84,6 +84,8 @@ import { NewNote } from './newNote';
     // create template card && card grid
     createCard();
     addTaskCardListener();
+    createNewTaskDialog();
+    createEditTaskDialog();
 }());
 
 
@@ -93,7 +95,7 @@ newTask.addEventListener('click', () => {
     startNewTask();
 });
 
-//export this whole function to a different module afterwards
+// add listener to card grid for the Complete/Delete/Edit btns
 function addTaskCardListener() {
     const taskCard = document.querySelector('.card-grid');
     taskCard.addEventListener('click', function(e) {
