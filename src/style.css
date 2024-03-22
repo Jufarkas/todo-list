@@ -54,7 +54,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     letter-spacing: 2px;
     font-size: 2.7em;
     background-color: #3b82f6;
-    width: 100%;
+    width: 200vw;
     height: auto;
     text-align: center;
     padding-top: 12px;
@@ -83,11 +83,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 20%;
     height: 40px;
     filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(110deg) brightness(98%) contrast(108%);
-
+   
     /* 
     above changes the color of the SVG, created using:
     https://isotropic.co/tool/hex-color-to-css-filter/ 
     */
+
+    pointer-events: none;
+}
+
+span {
+    pointer-events: none;
 }
 
 .sidebar-list li button {
@@ -105,6 +111,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border: none;
     font-size: 1.2em;
     font-weight: 600;
+}
+
+.sidebar-list-click {
+    background-color: white !important;
+    color: #1e40af !important;
+    box-shadow: 2px 0px 0px 2px white !important;
+}
+
+.sidebar-list-click img {
+    filter: invert(25%) sepia(31%) saturate(4712%) hue-rotate(213deg) brightness(82%) contrast(96%) !important;
+}
+
+.sidebar-list-click:hover {
+    box-shadow: 2px 0px 0px 2px white !important;
+    border: none !important;
+    text-shadow: none !important;
+    background-color: white !important;
 }
 
 .sidebar-list button:hover {
@@ -145,7 +168,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     /* left margin offsets sidebar, with a 10px gap; right margin to match gap */
     margin-left: 240px;
     margin-right: 10px;
-    margin-top: 20px;
+    margin-top: 97px;
     margin-bottom: 20px;
 }
 
