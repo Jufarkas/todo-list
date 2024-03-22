@@ -5,7 +5,7 @@ import FutureTasksIcon from './futureTask.svg';
 import CompletedTasksIcon from './completedTask.svg';
 import NewTaskIcon from './newTask.svg';
 import { createCard } from './createCard';
-import { startNewTask, taskBtnClick } from './btnClickFn';
+import { filterCompletedTasks, filterCurrentTasks, filterFutureTasks, filterImportantTasks, startNewTask, taskBtnClick } from './btnClickFn';
 import { createNewTaskDialog, createEditTaskDialog } from './createDialogs';
 
 // below creates sidebar and appends to body; also adds hidden task note template
@@ -83,6 +83,8 @@ import { createNewTaskDialog, createEditTaskDialog } from './createDialogs';
 
     // create template card && card grid
     createCard();
+    addSidebarTaskFilterListeners();
+    addNewTaskBtnListener();
     addTaskCardListener();
     createNewTaskDialog();
     createEditTaskDialog();
@@ -90,10 +92,12 @@ import { createNewTaskDialog, createEditTaskDialog } from './createDialogs';
 
 
 // add listener to New Task sidebar btn
-const newTask = document.querySelector('.newTask');
-newTask.addEventListener('click', () => {
-    startNewTask();
-});
+function addNewTaskBtnListener(){
+    const newTask = document.querySelector('.newTask');
+    newTask.addEventListener('click', () => {
+        startNewTask();
+    });
+}
 
 // add listener to card grid for the Complete/Delete/Edit btns
 function addTaskCardListener() {
@@ -101,4 +105,37 @@ function addTaskCardListener() {
     taskCard.addEventListener('click', function(e) {
         taskBtnClick(e);
     });
+}
+
+// add listener to CurrentTasks, Imprtnt Tasks, Future Tasks && Compltd Tasks
+function addSidebarTaskFilterListeners() {
+    const sidebarTaskFilterBtns = document.querySelectorAll('button');
+    sidebarTaskFilterBtns.forEach((listItem) => {
+        listItem.addEventListener('click', (e) => {
+            const target = e.target;
+            // below removes 'click' style if another sidebar filter is clicked
+            sidebarTaskFilterBtns.forEach((button) => {
+                if (target === document.querySelector('.newTask')){
+                    return;
+                } else {
+                    button.classList.remove('sidebar-list-click');
+                }
+            })
+
+            // below applies the 'click'/'active' styling when clicked, and runs filter fnc
+            if (target === document.querySelector('.currentTasks')){
+                target.classList.add('sidebar-list-click');
+                filterCurrentTasks();
+            } else if (target === document.querySelector('.importantTasks')){
+                target.classList.add('sidebar-list-click');
+                filterImportantTasks();
+            } else if (target === document.querySelector('.futureTasks')){
+                target.classList.add('sidebar-list-click');
+                filterFutureTasks();
+            } else if (target === document.querySelector('.completedTasks')){
+                target.classList.add('sidebar-list-click');
+                filterCompletedTasks();
+            }
+        })
+    })
 }
