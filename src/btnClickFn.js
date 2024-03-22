@@ -20,6 +20,16 @@ export function startNewTask() {
 export function submitNewTask(e) {
     e.preventDefault();
     let title = document.getElementById('taskTitle').value;
+    
+    // below checks if title contains numbers, shows custom validation if it does and returns
+    let titleCheck = /\d/.test(title); 
+    if (titleCheck) {
+        const titleInput = document.getElementById('taskTitle');
+        titleInput.setCustomValidity("Only letters and spaces please, min 1 character");
+        titleInput.reportValidity();
+        return;
+    }
+
     let importance = document.getElementById('taskImportance').value; 
     let dueDate = document.getElementById('taskDueDate').value; 
     let description = document.getElementById('taskText').value;
@@ -42,10 +52,7 @@ export function taskBtnClick(e) {
         }
     } else if (target.classList.contains('edit-task')) {
         // adds new class that is the old title, to the '.task' card div
-        // we'll need this later to use to select that classes fields that we want to update with the user edits
-
-        // watch out for multiple user edits; will have to make sure it removes (should just be able to use ".replace()" ) the old class so we're not just stacking multiple unnecessary classes together
-
+        // we'll need this later to select that classes fields that we want to update with the user edits
         const oldTitleClass = card.querySelector('.task-title').textContent;
         card.childNodes[0].classList.add(oldTitleClass);
 
@@ -116,6 +123,16 @@ function removeNote(noteClicked){
 export function updateTask(e, oldTitle) {
     e.preventDefault();
     let title = document.getElementById('editTitle').value; 
+
+    // below checks if title contains numbers, shows custom validation if it does and returns
+    let titleCheck = /\d/.test(title);
+    if (titleCheck) {
+        const titleInput = document.getElementById('editTitle');
+        titleInput.setCustomValidity("Only letters and spaces please, min 1 character");
+        titleInput.reportValidity();
+        return;
+    }
+    
     let importance = document.getElementById('editImportance').value; 
     let dueDate = document.getElementById('editDueDate').value; 
     let description = document.getElementById('editText').value;

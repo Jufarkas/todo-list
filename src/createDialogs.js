@@ -28,9 +28,10 @@ export function createNewTaskDialog() {
     taskTitleInput.id = "taskTitle";
     taskTitleInput.type = "text";
     taskTitleInput.name = "task-title";
-    taskTitleInput.minLength = "2";
+    taskTitleInput.minLength = "1";
     taskTitleInput.maxLength = "60";
     taskTitleInput.autocomplete = "off";
+    taskTitleInput.required = true;
 
     formFieldset.appendChild(taskTitleLabel);
     formFieldset.appendChild(taskTitleInput);
@@ -103,6 +104,7 @@ export function createNewTaskDialog() {
     cancelButton.setAttribute("value", "cancel");
     cancelButton.formMethod = "dialog";
     cancelButton.classList.add('formCancel');
+    cancelButton.formNoValidate = true; // add to let 'cancel' just close the dialog, ignores our validation check
 
     const confirmButton = document.createElement('button');
     confirmButton.textContent = "Confirm";
@@ -119,7 +121,7 @@ export function createNewTaskDialog() {
     });
 };
 
-// manually creating editTaskDialog; need new ID's for the field inputs/labels
+// manually creating editTaskDialog; needed new ID's for the field inputs/labels
 // adds a listener to the 'save' button at the end
 export function createEditTaskDialog() {
     // add newTaskDialog to body
@@ -220,6 +222,7 @@ export function createEditTaskDialog() {
     cancelButton.setAttribute("value", "cancel");
     cancelButton.formMethod = "dialog";
     cancelButton.classList.add('formCancel');
+    cancelButton.formNoValidate = true;  // add to let 'cancel' just close the dialog, ignores our validation check
 
     const saveEditButton = document.createElement('button');
     saveEditButton.textContent = "Save";
@@ -235,24 +238,3 @@ export function createEditTaskDialog() {
         updateTask(e, oldTitle);
     });
 };
-
-// // clones newTaskDialog; changes classes to reflect needed editTaskDialog classes
-// export function createEditTaskDialog() {
-//     const newTaskDialog = document.querySelector('.newTaskDialog');
-//     const editTaskDialog = document.createElement('dialog');
-//     editTaskDialog.classList.add('editTaskDialog');
-//     BODY.appendChild(editTaskDialog);
-//     let children = newTaskDialog.childNodes;
-//     children.forEach((item) => {
-//         let editTaskDialogChild = item.cloneNode(true);
-//         editTaskDialog.appendChild(editTaskDialogChild);
-//     });
-
-//     const editTaskForm = document.querySelector('.editTaskDialog').firstChild;
-//     editTaskForm.classList.replace('newTaskForm', 'editTaskForm');   
-//     const editTaskDialogFieldset = document.querySelector('.editTaskForm').firstChild;
-//     editTaskDialogFieldset.classList.replace('newTaskDialogFieldset', 'editTaskDialogFieldset');
-
-//     editTaskForm.childNodes[1].childNodes[1].classList.add('hidden'); // hides 'confirm' button used for new tasks
-//     editTaskForm.childNodes[1].childNodes[2].classList.remove('hidden'); // un-hides 'save' button used to edit tasks
-// }
