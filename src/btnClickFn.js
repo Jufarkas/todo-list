@@ -21,9 +21,9 @@ export function submitNewTask(e) {
     e.preventDefault();
     let title = document.getElementById('taskTitle').value;
     
-    // below checks if title contains numbers, shows custom validation if it does and returns
-    let titleCheck = /\d/.test(title); 
-    if (titleCheck) {
+    // ensures title is only letters and spaces, no blanks; shows custom validation if fails and returns
+    let titleCheck = /^(?=.*[^\s])[a-zA-Z\s]*$/.test(title); 
+    if (!titleCheck) {
         const titleInput = document.getElementById('taskTitle');
         titleInput.setCustomValidity("Only letters and spaces please, min 1 character");
         titleInput.reportValidity();
@@ -51,10 +51,11 @@ export function taskBtnClick(e) {
             markIncomplete(card);
         }
     } else if (target.classList.contains('edit-task')) {
-        // adds new class that is the old title, to the '.task' card div
+        // adds new class that is the old title (minus spaces), to the '.task' card div
         // we'll need this later to select that classes fields that we want to update with the user edits
         const oldTitleClass = card.querySelector('.task-title').textContent;
-        card.childNodes[0].classList.add(oldTitleClass);
+        const titleWithoutSpaces = oldTitleClass.replace(/\s/g, '');
+        card.childNodes[0].classList.add(titleWithoutSpaces);
 
         openEditDialog(card);
 
@@ -124,15 +125,15 @@ export function updateTask(e, oldTitle) {
     e.preventDefault();
     let title = document.getElementById('editTitle').value; 
 
-    // below checks if title contains numbers, shows custom validation if it does and returns
-    let titleCheck = /\d/.test(title);
-    if (titleCheck) {
+    // ensures title is only letters and spaces, no blanks; shows custom validation if fails and returns
+    let titleCheck = /^(?=.*[^\s])[a-zA-Z\s]*$/.test(title);
+    if (!titleCheck) {
         const titleInput = document.getElementById('editTitle');
         titleInput.setCustomValidity("Only letters and spaces please, min 1 character");
         titleInput.reportValidity();
         return;
     }
-    
+
     let importance = document.getElementById('editImportance').value; 
     let dueDate = document.getElementById('editDueDate').value; 
     let description = document.getElementById('editText').value;
