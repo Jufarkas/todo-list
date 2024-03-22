@@ -189,8 +189,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .card-buttons button:hover{
     background-color: #dbeafe;
-    /* box-shadow: 1px 1px 3px 0px #60a5fa; */
-    box-shadow: inset 0px -1px 3px 0px #60a5fa;
+    box-shadow: inset -2px -2px 2px 0px #000000;
     cursor: pointer;
 }
 
@@ -239,7 +238,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     /* or #a7f3d0, or #bbf7d0 */
 }
 
+.completedNote+.card-buttons button {
+    background-color: #d9f99d !important;
+}
+
 .importantNote {
+    background-color: #fecaca;
+}
+
+.importantNote+.card-buttons button {
     background-color: #fecaca;
 }
 
@@ -255,9 +262,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: rgba(255, 255, 255, 0.836);
 }
 
-.taskDialog {
+.newTaskDialog, .editTaskDialog {
     height: 540px;
-    width: 500px;
+    width: 515px;
     min-width: 200px;
     padding: 20px 20px 0 20px;
     border-radius: 10px;
@@ -268,7 +275,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: #dbeafe;
 }
 
-.newTaskDialogFieldset {
+.newTaskDialogFieldset, .editTaskDialogFieldset {
     height: 450px;
     display: flex;
     flex-direction: column;
@@ -288,17 +295,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin: 0 0 5px 0;
 }
 
-#taskTitle {
+#taskTitle, #editTitle {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.1em;
 }
 
-#taskImportance {
+#taskImportance, #editImportance {
     width: 115px;
     font-size: 1em;
 }
 
-#taskText {
+#taskText, #editText {
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;
@@ -311,7 +318,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin: 10px 0;
 }
 
-.formCancel, .formConfirm {
+.hidden {
+    display: none !important;
+}
+
+.formCancel, .formConfirm, .saveEditBtn {
     cursor: pointer;
     font-size: 1.4em;
     height: 50px;
@@ -319,7 +330,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-radius: 10px;
 }
 
-.formCancel, .formConfirm {
+.formCancel, .formConfirm, .saveEditBtn {
     height: 50px;
     justify-content: center;
     gap: 20px;
@@ -342,12 +353,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-self: center;
 }
 
-.formCancel:active, .formConfirm:active {
+.formCancel:active, .formConfirm:active, .saveEditBtn:active {
     transform: translate(3px,3px);
 }
 
 
-.formConfirm:hover {
+.formConfirm:hover, .saveEditBtn:hover {
     background-color: rgba(30, 255, 0, 0.2);
     box-shadow: 4px 4px 0 #000;
     transform: translate(-3px,-3px);
@@ -359,6 +370,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transform: translate(-3px,-3px);
 }
 
-.formConfirm:focus-visible, .formCancel:focus-visible{
+.formConfirm:focus-visible, .formCancel:focus-visible, .saveEditBtn:focus-visible{
     outline-offset: 1px;
 }
