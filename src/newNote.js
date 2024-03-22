@@ -56,11 +56,12 @@ export class NewNote {
             alert("This note title already exists!");
             return;
         }
-
         const editTaskDialog = document.querySelector('.editTaskDialog');
-        const target = document.querySelector('.' + oldTitle);
+        const target = document.querySelector('.' + oldTitle.replace(/\s/g, ''));
+
         // grab existing note from the original title we stored in oldTitle
         const note = this.myNotes[oldTitle];
+
         // delete it
         delete this.myNotes[oldTitle];
 
@@ -70,7 +71,6 @@ export class NewNote {
         this.myNotes[title].importance = importance;
         this.myNotes[title].dueDate = dueDate;
         this.myNotes[title].description = description;
-
 
         let newTitle = target.querySelector('.task-title');
         let newImportance = target.querySelector('.task-priority');
@@ -83,8 +83,11 @@ export class NewNote {
 
         importanceChangeCheck(importance, target);
         console.log(this.myNotes); // ************************************ remove after complete
-        target.classList.remove(oldTitle);
-        target.classList.add(title);
+        // remove spaces and remove class with old title && replace with new title
+        target.classList.remove(oldTitle.replace(/\s/g, ''));
+        const titleWithoutSpaces = title.replace(/\s/g, '');
+        target.classList.add(titleWithoutSpaces);
+
         editTaskDialog.close();
     };
 };
