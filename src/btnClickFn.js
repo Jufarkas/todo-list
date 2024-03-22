@@ -139,3 +139,98 @@ export function updateTask(e, oldTitle) {
     let description = document.getElementById('editText').value;
     NewNote.editNote(oldTitle, title, importance, dueDate, description);
 }
+
+
+export function filterCurrentTasks(){
+    const allTasks = document.querySelectorAll('.task-card');
+    allTasks.forEach((taskCard) => {
+        if (taskCard.firstChild.classList.contains('completedNote')){
+            taskCard.classList.add('hidden');
+        } else if (taskCard.classList.contains('hidden') && !taskCard.firstChild.classList.contains('completedNote')){
+            taskCard.classList.remove('hidden');
+        }
+    });
+};
+
+export function filterImportantTasks(){
+    const allTasks = document.querySelectorAll('.task-card');
+    allTasks.forEach((taskCard) => {
+        // if important and completed, add hidden
+        // if important and not completed and hidden, remove hidden
+        // if not important, add hidden
+    if (taskCard.firstChild.classList.contains('importantNote') 
+            && taskCard.firstChild.classList.contains('completedNote') 
+            && !taskCard.classList.contains('hidden')){
+        taskCard.classList.add('hidden');
+
+    } else if (taskCard.firstChild.classList.contains('importantNote') 
+            && !taskCard.firstChild.classList.contains('completedNote')
+            && taskCard.classList.contains('hidden')){
+        taskCard.classList.remove('hidden');
+
+    } else if (!taskCard.firstChild.classList.contains('importantNote')){
+        taskCard.classList.add('hidden');
+
+    } else {
+        return;
+    }
+    });
+}
+
+export function filterFutureTasks(){
+    const allTasks = document.querySelectorAll('.task-card');
+    allTasks.forEach((taskCard) => {
+        const DATEINPUT = document.querySelectorAll('.task-date');
+        DATEINPUT.forEach((date) => {
+            if (date !== ""){
+                const todaysDate = new Date();
+                const month = todaysDate.getUTCMonth() + 1; // months from 1-12, JS starts at '0' so have to add +1
+                const day = todaysDate.getUTCDate();
+                const year = todaysDate.getUTCFullYear();
+                    
+                // Using padded values and a '-'; now 2024/1/1 becomes 2024-01-01
+                const paddedMonth = month.toString().padStart(2,"0");
+                const paddedDay = day.toString().padStart(2,"0");
+                const currentDate = `${year}-${paddedMonth}-${paddedDay}`;
+                let userDate = taskCard.firstChild.childNodes[2].textContent.replace('Due: ', '');
+                
+                calcDateDifference(userDate, currentDate, taskCard);
+            } else {
+                return;
+            }
+        });
+    });
+};
+
+function calcDateDifference(userDate, currentDate, taskCard) {
+    let startDate = currentDate;
+    let endDate = userDate;
+
+    let differenceInTime = new Date(endDate).getTime() - new Date(startDate).getTime();
+    let differenceInDays = differenceInTime / (1000 * 3600 * 24) + 1;
+    if (userDate === ""){
+        taskCard.classList.add('hidden');
+    } else if (taskCard.firstChild.classList.contains('completedNote')){
+        taskCard.classList.add('hidden');
+    } else if (differenceInDays < 7){
+        taskCard.classList.add('hidden');
+    } else if (differenceInDays >= 7 && taskCard.classList.contains('hidden')){
+        taskCard.classList.remove('hidden');
+    } else {
+        return;
+    }
+};
+
+export function filterCompletedTasks(){
+    const allTasks = document.querySelectorAll('.task-card');
+    allTasks.forEach((taskCard) => {
+        if (taskCard.firstChild.classList.contains('completedNote') 
+            && taskCard.classList.contains('hidden')){
+            taskCard.classList.remove('hidden');
+        } else if (!taskCard.firstChild.classList.contains('completedNote')){
+            taskCard.classList.add('hidden');
+        } else {
+            return;
+        }
+    });
+};
