@@ -2,11 +2,12 @@ import './style.css';
 import CurrentTasksIcon from './currentTask.svg';
 import ImportantTasksIcon from './importantTask.svg';
 import FutureTasksIcon from './futureTask.svg';
-import CompletedTasksIcon from './completedTask.svg';
+import CompletedIcon from './completedTask.svg';
 import NewTaskIcon from './newTask.svg';
 import { createCard } from './createCard';
 import { filterCompletedTasks, filterCurrentTasks, filterFutureTasks, filterImportantTasks, startNewTask, taskBtnClick } from './btnClickFn';
 import { createNewTaskDialog, createEditTaskDialog } from './createDialogs';
+import { NewNote } from "./newNote";
 
 // below creates sidebar and appends to body; also adds hidden task note template
 (function(){
@@ -36,13 +37,13 @@ import { createNewTaskDialog, createEditTaskDialog } from './createDialogs';
         },
         {
             title: "futureTasks",
-            text: "Future Tasks",
+            text: "Future Tasks (due date > 7d)",
             imgSrc: FutureTasksIcon,
         },
         {
             title: "completedTasks",
             text: "Completed Tasks",
-            imgSrc: CompletedTasksIcon,
+            imgSrc: CompletedIcon,
         },
         {
             title: "newTask",
@@ -73,6 +74,10 @@ import { createNewTaskDialog, createEditTaskDialog } from './createDialogs';
 
     sidebar.appendChild(sidebarList);
 
+    // adds 'selected' styling to Current Tasks
+    const currentTasks = document.querySelector('.currentTasks');
+    currentTasks.classList.add('sidebar-list-click');
+
     // creates master container for positioning page with sidebar; cardGrid container for the card grid
     const masterContainer = document.createElement('div');
     masterContainer.classList.add('master-container');
@@ -88,6 +93,10 @@ import { createNewTaskDialog, createEditTaskDialog } from './createDialogs';
     addTaskCardListener();
     createNewTaskDialog();
     createEditTaskDialog();
+    
+    const storageLoad = new NewNote();
+    storageLoad.createDomElements();
+
 }());
 
 
