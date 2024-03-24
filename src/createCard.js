@@ -1,7 +1,7 @@
 // creates template card that we hide using the 'wrapper' class; used for cloning in newNote.js
 
 
-import MarkCompleteIcon from './markComplete.svg';
+import CompleteIcon from './markComplete.svg';
 import DeleteIcon from './deleteTask.svg';
 import EditIcon from './editTask.svg';
 // import { NewNote } from './newNote';
@@ -48,7 +48,7 @@ export function createCard() {
     completeBtn.textContent = "Complete";
     completeBtn.classList.add('complete-task');
     const completeBtnIcon = new Image();
-    completeBtnIcon.src = MarkCompleteIcon;
+    completeBtnIcon.src = CompleteIcon;
     completeBtnIcon.setAttribute("alt", "mark complete button icon");
     completeBtn.appendChild(completeBtnIcon);
     
@@ -72,9 +72,97 @@ export function createCard() {
     
 
     cardButtons.appendChild(completeBtn);
-    // cardButtons.appendChild(completeBtnIcon);
     cardButtons.appendChild(deleteBtn);
-    // cardButtons.appendChild(deleteBtnIcon);
     cardButtons.appendChild(editBtn);
-    // cardButtons.appendChild(editBtnIcon);
 };
+
+
+// creates cards for items saved in localStorage
+export function createDomElements(notes){
+    notes.forEach(note => {
+        const cardGrid = document.querySelector('.card-grid');
+        const taskCard = document.createElement('div');
+        taskCard.classList.add('task-card');
+        
+        const task = document.createElement('div');
+        task.classList.add('task');
+
+        const taskElements = [
+            { 
+                type: "h3",
+                class: "task-title",
+                text: note.title
+            },
+            { 
+                type: "h6",
+                class: "task-priority",
+                text: "Importance: " + note.importance,
+            },
+            { 
+                type: "h6",
+                class: "task-date",
+                text: "Due: " + note.dueDate,
+            },
+            {
+                type: "p",
+                class: "task-para",
+                text: note.description,
+            },
+        ];
+
+        taskElements.forEach((element) => {
+            const el = document.createElement(element.type);
+            if (note.importance === "Important") {
+                task.classList.add('importantNote');
+            }
+            if (note.completed === "yes") {
+                task.classList.add('completedNote');
+            }
+            el.classList.add(element.class);
+            el.textContent = element.text;
+            task.appendChild(el);
+        });
+
+        const taskCardBtns = document.createElement('div');
+        taskCardBtns.classList.add('card-buttons');
+
+        const buttons = [
+            { 
+                btnName: "Complete",
+                class: "complete-task",
+                imgSrc: CompleteIcon
+            },
+            { 
+                btnName: "Delete",
+                class: "delete-task",
+                imgSrc: DeleteIcon
+            },
+            { 
+                btnName: "Edit",
+                class: "edit-task",
+                imgSrc: EditIcon
+            },
+        ];
+
+        buttons.forEach(item => {
+            const btn = document.createElement('button');
+            btn.textContent = item.btnName;
+            btn.classList.add(item.class);
+            if (item.btnName === "Complete" && note.completed === "yes") {
+                btn.textContent = "Incomplete";
+                taskCard.classList.add('hidden');
+            }
+
+            const btnIcon = new Image();
+            btnIcon.src = item.imgSrc;
+            btnIcon.setAttribute("alt", item.btnName + " note icon");
+
+            btn.appendChild(btnIcon);
+            taskCardBtns.appendChild(btn);
+        })
+
+        taskCard.appendChild(task);
+        taskCard.appendChild(taskCardBtns);
+        cardGrid.appendChild(taskCard);
+    })
+}
