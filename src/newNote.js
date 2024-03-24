@@ -1,20 +1,35 @@
+import { createDomElements } from "./createCard";
+
 export class NewNote {
 
-    static title;
-    static importance;
-    static dueDate;
-    static description;
-    static myNotes = [];
+    title;
+    importance;
+    dueDate;
+    description;
+    completed;
+    myNotes = [];
 
-    constructor(title, importance, dueDate, description) {
+    constructor(title, importance, dueDate, description, completed) {
         this.title = title;
         this.importance = importance;
         this.dueDate = dueDate;
         this.description = description;
+        this.completed = completed;
+        this.myNotes = [];
+
+        if (localStorage.getItem('myNotes')) {
+            this.myNotes = JSON.parse(localStorage.getItem('myNotes'));
+        };
     };
 
-    static createNewNote(title, importance, dueDate, description){
-        if(this.myNotes.hasOwnProperty(title)){
+    createDomElements() {
+        createDomElements(this.myNotes);
+    }
+
+    createNewNote(title, importance, dueDate, description, completed){
+        const newNote = new NewNote(title, importance, dueDate, description, completed);
+
+        if(this.myNotes.some(note => note.title === title)){
             alert("This note title already exists!");
             return;
         }
@@ -39,38 +54,34 @@ export class NewNote {
             task.classList.add('importantNote'); //checks if "important" is selected and applies relevant class
         };
 
-        this.myNotes[title] = new NewNote(title, importance, dueDate, description);
 
         // clones children in hidden wrapper to create new notes
         let children = wrapper.childNodes;
         children.forEach((item) => {
-            let newNote = item.cloneNode(true);
-            cardGrid.appendChild(newNote);
+            let newNoteContent = item.cloneNode(true);
+            cardGrid.appendChild(newNoteContent);
         });
-        console.log(this.myNotes); // ************************************ remove after complete
+
+        this.myNotes.push(newNote);
+        localStorage.setItem('myNotes', JSON.stringify(this.myNotes));
+        //console.log(this.myNotes);
         newTaskDialog.close();
     };
 
-    static editNote(oldTitle, title, importance, dueDate, description){
-        if(this.myNotes.hasOwnProperty(title) && oldTitle !== title){
+    editNote(oldTitle, title, importance, dueDate, description){
+        if(this.myNotes.some(note => note.title === title) && oldTitle !== title){
             alert("This note title already exists!");
             return;
         }
+        const oldNote = this.myNotes.findIndex(note => note.title === oldTitle);
         const editTaskDialog = document.querySelector('.editTaskDialog');
         const target = document.querySelector('.' + oldTitle.replace(/\s/g, ''));
 
-        // grab existing note from the original title we stored in oldTitle
-        const note = this.myNotes[oldTitle];
-
-        // delete it
-        delete this.myNotes[oldTitle];
-
-        // add new note with new title
-        this.myNotes[title] = note;
-        this.myNotes[title].title = title;
-        this.myNotes[title].importance = importance;
-        this.myNotes[title].dueDate = dueDate;
-        this.myNotes[title].description = description;
+        // uses oldNote index# (from findIndex) and updates array info
+        this.myNotes[oldNote].title = title;
+        this.myNotes[oldNote].importance = importance;
+        this.myNotes[oldNote].dueDate = dueDate;
+        this.myNotes[oldNote].description = description;
 
         let newTitle = target.querySelector('.task-title');
         let newImportance = target.querySelector('.task-priority');
@@ -82,12 +93,14 @@ export class NewNote {
         newDescription.textContent = description;
 
         importanceChangeCheck(importance, target);
-        console.log(this.myNotes); // ************************************ remove after complete
+        // console.log(this.myNotes);
+
         // remove spaces and remove class with old title && replace with new title
         target.classList.remove(oldTitle.replace(/\s/g, ''));
         const titleWithoutSpaces = title.replace(/\s/g, '');
         target.classList.add(titleWithoutSpaces);
 
+        localStorage.setItem('myNotes', JSON.stringify(this.myNotes));
         editTaskDialog.close();
     };
 };
