@@ -1,4 +1,4 @@
-import MarkCompleteIcon from './markComplete.svg';
+import CompleteIcon from './markComplete.svg';
 import { NewNote } from "./newNote";
 
 
@@ -33,8 +33,10 @@ export function submitNewTask(e) {
     let importance = document.getElementById('taskImportance').value; 
     let dueDate = document.getElementById('taskDueDate').value; 
     let description = document.getElementById('taskText').value;
+    let completed = "no";
     // run class function to create new note with constructor from newNote
-    NewNote.createNewNote(title, importance, dueDate, description);
+    const newNote = new NewNote();
+    newNote.createNewNote(title, importance, dueDate, description, completed);
 };
 
 // runs when user clicks 'Complete', 'Delete', or 'Edit' on their task
@@ -43,6 +45,7 @@ export function submitNewTask(e) {
 export function taskBtnClick(e) {
     const target = e.target;
     const card = target.closest('.task-card');
+
 
     if (target.classList.contains('complete-task')){
         if (target.textContent === "Complete"){
@@ -74,20 +77,36 @@ export function taskBtnClick(e) {
         const completeBtn = card.querySelector('.complete-task');
         completeBtn.textContent = 'Incomplete';
         const completeBtnIcon = new Image();
-        completeBtnIcon.src = MarkCompleteIcon;
+        completeBtnIcon.src = CompleteIcon;
         completeBtnIcon.setAttribute("alt", "mark complete button icon");
         completeBtn.appendChild(completeBtnIcon);
-    
-    }
+        
+        const newNote = new NewNote();
+        const noteArray = newNote.myNotes;
+        let noteClicked = card.querySelector('.task-title').textContent;
+        const noteToComplete = noteArray.findIndex(note => note.title === noteClicked);
+        noteArray[noteToComplete].completed = "yes";
+        //console.log(noteArray);
+        localStorage.setItem('myNotes', JSON.stringify(noteArray));
+    };
+
     
     function markIncomplete(card){
         card.querySelector('.task').classList.remove('completedNote');
         const completeBtn = card.querySelector('.complete-task');
         completeBtn.textContent = 'Complete';
         const completeBtnIcon = new Image();
-        completeBtnIcon.src = MarkCompleteIcon;
+        completeBtnIcon.src = CompleteIcon;
         completeBtnIcon.setAttribute("alt", "mark complete button icon");
         completeBtn.appendChild(completeBtnIcon);
+
+        const newNote = new NewNote();
+        const noteArray = newNote.myNotes;
+        let noteClicked = card.querySelector('.task-title').textContent;
+        const noteToIncomplete = noteArray.findIndex(note => note.title === noteClicked);
+        noteArray[noteToIncomplete].completed = "no";
+        //console.log(noteArray);
+        localStorage.setItem('myNotes', JSON.stringify(noteArray));
     }
 
     function openEditDialog(card) {
@@ -111,11 +130,15 @@ export function taskBtnClick(e) {
     }
 };
 
-const noteArray = NewNote.myNotes;
+
 function removeNote(noteClicked){
-    if(noteArray[noteClicked]){
-        delete noteArray[noteClicked]
-        console.log(noteArray);
+    const newNote = new NewNote();
+    const noteArray = newNote.myNotes;
+    const noteToDelete = noteArray.findIndex(note => note.title === noteClicked);
+    if(noteToDelete !== -1){
+        noteArray.splice(noteToDelete, 1);
+        //console.log(noteArray);
+        localStorage.setItem('myNotes', JSON.stringify(noteArray));
     };
 };
 
@@ -137,7 +160,9 @@ export function updateTask(e, oldTitle) {
     let importance = document.getElementById('editImportance').value; 
     let dueDate = document.getElementById('editDueDate').value; 
     let description = document.getElementById('editText').value;
-    NewNote.editNote(oldTitle, title, importance, dueDate, description);
+
+    const newNote = new NewNote();
+    newNote.editNote(oldTitle, title, importance, dueDate, description);
 }
 
 
